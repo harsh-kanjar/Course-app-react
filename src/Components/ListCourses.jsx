@@ -14,7 +14,7 @@ const ListCourses = () => {
     };
 
     const fetchCourses = () => {
-        axios.get('http://127.0.0.1:8000/courses/', {
+        axios.get('http://127.0.0.1:8000/api/courses/', {
             headers: {
                 'X-CSRFToken': getCsrfToken(),
             }
@@ -28,7 +28,7 @@ const ListCourses = () => {
 
     const handleDelete = (id) => {
         if (window.confirm('Are you sure you want to delete this course?')) {
-            axios.delete(`http://127.0.0.1:8000/delete-course/${id}/`, {
+            axios.delete(`http://127.0.0.1:8000/api/courses/${id}/`, {
                 headers: {
                     'X-CSRFToken': getCsrfToken(),
                 }
@@ -44,6 +44,7 @@ const ListCourses = () => {
     const handleSearch = (id) => {
         // Implement your search or view function here
         console.log('Search for course:', id);
+        // Example: Navigate to a detailed view page or show a modal
     };
 
     useEffect(() => {
@@ -67,30 +68,10 @@ const ListCourses = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {/* This is dummy entry */}
-                        <tr>
-                            <td>Lorem ipsum dolor sit amet , lorem ipsum dolor sit amet</td>
-                            <td>1611651561</td>
-                            <td>
-                                <button
-                                    className="btn btn-link"
-                                    onClick={() => handleSearch(course.id)}
-                                >
-                                    <FontAwesomeIcon icon={faSearch} />
-                                </button>
-                                <button
-                                    className="btn btn-link text-danger"
-                                    onClick={() => handleDelete(course.id)}
-                                >
-                                    <FontAwesomeIcon icon={faTrash} />
-                                </button>
-                            </td>
-                        </tr>
-
                     {courses.map((course) => (
                         <tr key={course.id}>
                             <td>{course.title}</td>
-                            <td>{course.code}</td>
+                            <td>{course.course_code}</td>
                             <td>
                                 <button
                                     className="btn btn-link"

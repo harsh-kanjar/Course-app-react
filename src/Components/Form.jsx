@@ -14,13 +14,13 @@ const Form = () => {
     };
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/courses/', {
+        axios.get('http://127.0.0.1:8000/api/courses/', {
             headers: {
                 'X-CSRFToken': getCsrfToken(),
             }
         })
         .then(response => {
-            console.log(response.data); 
+            console.log('Fetched courses:', response.data); 
             if (Array.isArray(response.data)) {
                 setCourses(response.data);
             } else {
@@ -40,23 +40,30 @@ const Form = () => {
 
     const handleInstanceSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://127.0.0.1:8000/add-instance/', instance, {
+        axios.post('http://127.0.0.1:8000/api/instances/', instance, {
             headers: {
                 'X-CSRFToken': getCsrfToken(),
             }
         })
-        .then(response => console.log('Instance added:', response.data))
+        .then(response => {
+            console.log('Instance added:', response.data);
+            // Optionally, refresh the instances or handle UI update
+        })
         .catch(error => console.error('Error adding instance:', error));
     };
 
     const handleCourseSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://127.0.0.1:8000/add-course/', course, {
+        axios.post('http://127.0.0.1:8000/api/courses/', course, {
             headers: {
                 'X-CSRFToken': getCsrfToken(),
             }
         })
-        .then(response => console.log('Course added:', response.data))
+        .then(response => {
+            console.log('Course added:', response.data);
+            setCourse({ title: '', code: '', description: '' }); // Reset form fields
+            // Optionally, refresh the courses list
+        })
         .catch(error => console.error('Error adding course:', error));
     };
 

@@ -16,7 +16,7 @@ const ListInstances = () => {
     };
 
     const fetchInstances = () => {
-        axios.get('http://127.0.0.1:8000/instances/', {
+        axios.get('http://127.0.0.1:8000/api/instances/', {
             params: { year, semester },
             headers: {
                 'X-CSRFToken': getCsrfToken(),
@@ -31,7 +31,7 @@ const ListInstances = () => {
 
     const handleDelete = (id) => {
         if (window.confirm('Are you sure you want to delete this instance?')) {
-            axios.delete(`http://127.0.0.1:8000/delete-instance/${id}/`, {
+            axios.delete(`http://127.0.0.1:8000/api/instances/${id}/`, {
                 headers: {
                     'X-CSRFToken': getCsrfToken(),
                 }
@@ -43,11 +43,17 @@ const ListInstances = () => {
             .catch(error => console.error('Error deleting instance:', error));
         }
     };
+    
 
     const handleSearch = (id) => {
         // Implement your search or view function here
         console.log('Search for instance:', id);
+        // Example: Navigate to a detailed view page or show a modal
     };
+
+    useEffect(() => {
+        fetchInstances();
+    }, [year, semester]); // Refetch instances when year or semester changes
 
     return (
         <div className="container mt-5">
@@ -87,27 +93,6 @@ const ListInstances = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {/* This is dummy entry */}
-                        <tr>
-                            <td>Lorem ipsum dolor sit amet , lorem ipsum dolor sit amet</td>
-                            <td> 2021 - 1</td>
-                            <td>1611651561</td>
-                            <td>
-                                <button
-                                    className="btn btn-link"
-                                    onClick={() => handleSearch(instance.id)}
-                                >
-                                    <FontAwesomeIcon icon={faSearch} />
-                                </button>
-                                <button
-                                    className="btn btn-link text-danger"
-                                    onClick={() => handleDelete(instance.id)}
-                                >
-                                    <FontAwesomeIcon icon={faTrash} />
-                                </button>
-                            </td>
-                        </tr>
-
                     {instances.map((instance) => (
                         <tr key={instance.id}>
                             <td>{instance.course_title}</td>
